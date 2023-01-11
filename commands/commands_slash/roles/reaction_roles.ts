@@ -93,7 +93,6 @@ module.exports = {
                         .setRequired(true))
         ),
 
-
     execute: async function (interaction: Discord.ChatInputCommandInteraction) {
         if (!interaction.guild) {
             return;
