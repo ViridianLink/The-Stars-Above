@@ -21,6 +21,7 @@ const dbURI = process.env.MONGO_ATLAS_URI || ""
 mongoose.connect(dbURI)
     .then(() => console.log("Connected to DB"))
     .catch(console.error)
+mongoose.set("strictQuery", true)
 
 export const client = new TheStarsAbove({
     intents: [
