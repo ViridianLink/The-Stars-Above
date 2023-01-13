@@ -1,4 +1,7 @@
+import Discord from "discord.js";
+
 export interface IMessageCommand {
     command: string
-    callback: Function
+
+    callback(message: Discord.Message): any
 }
