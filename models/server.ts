@@ -19,59 +19,56 @@ export interface IModeration {
 
 
 export interface IServer {
+    channels: {
+        suggestionChannel: string,
+        logsChannel: string,
+        ticketChannel: string,
+        countingChannel: string
+    },
+    counting: {
+        number: number,
+        lastUser: string
+    },
+    disabledCommands: string[],
+    hidden: {
+        rules: Map<string, string>
+    },
     id: string,
+    moderation: IModeration[]
     reactionRoles: [{
         channelId: string,
         messageId: string,
         roleId: string,
         emoji: string
-    }],
-    disabledCommands: string[],
+    }]
     roles: {
         default: string[],
         moderationRoles: string[],
         supportRoles: string[]
     },
-    channels: {
-        suggestionChannel: string,
-        logsChannel: string,
-        ticketChannel: string
-    },
-    ticketId: number
-    serverRules: string[],
-    hidden: {
-        rules: Map<string, string>
-    },
-    moderation: IModeration[]
+    serverRules: string[]
+    ticketId: number;
 
-    save(): Promise<IServer>;
+    save(): Promise<IServer>,
 }
 
 
 const ServerSchema = new mongoose.Schema<IServer>({
-    id: String,
-    reactionRoles: [{
-        channelId: String,
-        messageId: String,
-        roleId: String,
-        emoji: String
-    }],
-    disabledCommands: [String],
-    roles: {
-        default: [String],
-        moderationRoles: [String],
-        supportRoles: [String]
-    },
     channels: {
         suggestionChannel: String,
         logsChannel: String,
-        ticketChannel: String
+        ticketChannel: String,
+        countingChannel: String
     },
-    ticketId: {type: Number, default: 0},
-    serverRules: [String],
+    counting: {
+        number: {type: Number, default: 0},
+        lastUser: String
+    },
+    disabledCommands: [String],
     hidden: {
         rules: {type: Map, of: String}
     },
+    id: String,
     moderation: [{
         caseNumber: Number,
         guildId: String,
@@ -80,6 +77,19 @@ const ServerSchema = new mongoose.Schema<IServer>({
         moderatorId: String,
         reason: String
     }],
+    reactionRoles: [{
+        channelId: String,
+        messageId: String,
+        roleId: String,
+        emoji: String
+    }],
+    roles: {
+        default: [String],
+        moderationRoles: [String],
+        supportRoles: [String]
+    },
+    serverRules: [String],
+    ticketId: {type: Number, default: 0},
 })
 
 export async function getServer(id: string): Promise<IServer> {
