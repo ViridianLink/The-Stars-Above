@@ -46,7 +46,7 @@ async function remove_reaction_role(
         return interaction.reply({content: "No reaction found", ephemeral: true});
     }
 
-    await Promise.all([reaction.remove, server.save])
+    await Promise.all([reaction.remove(), server.save()])
 }
 
 module.exports = {
