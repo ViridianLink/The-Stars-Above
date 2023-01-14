@@ -25,7 +25,14 @@ export async function init(client: TheStarsAbove) {
             reactionRole.messageId = msg.id
 
             const role = await guild.roles.fetch(reactionRole.roleId)
-            reactionRole.roleId = role!.id
+
+            if (!role) {
+                await msg.reactions.cache.get(reactionRole.emoji)?.remove()
+                // server.reactionRoles.
+                continue;
+            }
+
+            reactionRole.roleId = role.id
         }
     }
 }
