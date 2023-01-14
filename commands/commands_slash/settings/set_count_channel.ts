@@ -5,6 +5,7 @@ module.exports = {
     data: new Discord.SlashCommandBuilder()
         .setName("set_count_channel")
         .setDescription("Sets the counting channel")
+        .setDefaultMemberPermissions(Discord.PermissionFlagsBits.Administrator)
         .addChannelOption(x => x.setName("channel")
             .setDescription("Counting channel")
             .setRequired(true)
