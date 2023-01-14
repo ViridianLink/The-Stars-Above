@@ -58,8 +58,8 @@ client.on("ready", async () => {
     }
 
     // Self Updating
-    // const customRoles = require("./self_updating/customRoles")
-    // await customRoles(client, "805765564504473641")
+    const nameColorsMessage = require("./self_updating/name_colors_message")
+    await nameColorsMessage.name_colors_message(client, "1063518630261825597", "1063528866506887218")
 
     // const updateRules = require("./self_updating/updateRules")
     // await updateRules(client, "747430712617074718")
