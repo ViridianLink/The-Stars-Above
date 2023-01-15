@@ -1,7 +1,6 @@
 import Discord from "discord.js"
 import {TheStarsAbove} from "../client";
 
-"1063528866506887218"
 const COLOR_ROLES = {
     "<:DarkRed:1064097282477277225>": "<@&1063471563371991131>",
     "<:Red:1064097203225890816>": "<@&1063471126682017862>",
@@ -25,7 +24,7 @@ const COLOR_ROLES = {
     "<:NotQuiteBlack:1064097278278766644>": "<@&1063471810160631808>"
 }
 
-export async function name_colors_message(client: TheStarsAbove, channelId: string, messageId?: string) {
+async function nameColorsMessage(client: TheStarsAbove, channelId: string, messageId?: string) {
     const channel = await client.channels.fetch(channelId)
 
     if (channel?.type != Discord.ChannelType.GuildText) {
@@ -47,4 +46,8 @@ export async function name_colors_message(client: TheStarsAbove, channelId: stri
     } else {
         channel.send({embeds: [embed]})
     }
+}
+
+module.exports = async function (client: TheStarsAbove) {
+    await nameColorsMessage(client, "1063518630261825597", "1063528866506887218")
 }
