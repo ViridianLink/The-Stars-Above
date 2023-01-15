@@ -2,24 +2,22 @@ import Discord from "discord.js"
 import {TheStarsAbove} from "../../client";
 
 const REACTION_ROLES = {
-    "Region": {
-        "🐧": "<@&926597197972267059>",
-        "🦅": "<@&926596893142822974>",
-        "🐱": "<@&926596940513300491>",
-        "🐦": "<@&926597017881411615>",
-        "🦒": "<@&926597362904883200>",
-        "🐉": "<@&926596974835277835>",
-        "🐨": "<@&926597265039171675>"
-    },
-    "Server Pings": {
-        "⌨️": "<@&926514236719530086>",
-        "🎙️": "<@&926514273188991017>",
-        "❔": "<@&926514202506579989>",
-        "📸": "<@&951002600893980702>",
-        "🤫": "<@&927233369455087656>"
+    "Interests": {
+        "Music": "",
+        ":video_game:": "<@&926515717224955905>",
+        "Art": "",
+        "Anime": "",
+        "Movies / TV": "",
+        "Fitness": "",
+        "Reading": "",
+        "Cooking": "",
+        "Sports": "",
+        "Gardening": "",
+        ":pray:": "<@&1034678584289267784>",
     }
 }
 
+// noinspection DuplicatedCode
 async function reactionRolesMessage(client: TheStarsAbove, channelId: string, messageId?: string) {
     const channel = await client.channels.fetch(channelId)
 
