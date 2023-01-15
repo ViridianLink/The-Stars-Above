@@ -1,6 +1,6 @@
 import Discord from "discord.js";
 
-const COLORS: Record<string, string> = {
+const VALID_COLORS: Record<string, string> = {
     "DEFAULT": "0x000000",
     "WHITE": "0xffffff",
     "AQUA": "0x1abc9c",
@@ -41,8 +41,8 @@ async function color_set(interaction: Discord.ChatInputCommandInteraction) {
 
     let color = Number(colorInput)
 
-    if (colorInput in COLORS) {
-        color = Number(COLORS[colorInput])
+    if (colorInput in VALID_COLORS) {
+        color = Number(VALID_COLORS[colorInput])
     } else if (colorInput == "RANDOM") {
         colorInput = "0x" + Math.floor(Math.random() * 16777215).toString(16).toUpperCase()
     } else if (isNaN(color)) {
