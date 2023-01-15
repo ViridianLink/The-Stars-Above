@@ -1,12 +1,13 @@
 import Discord from "discord.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import {Server} from "./models/server";
+import {getServer, Server} from "./models/server";
 import {UserConfig} from "./models/user-config";
 import {createServer} from "./servers";
 import {TheStarsAbove} from "./client"
 import {loadMessageCommands, loadSlashCommands} from "./commands/load_commands";
 import deployCommands from "./deploy_commands";
+import {getRoleResolvable} from "./common";
 
 switch (process.env.NODE_ENV) {
     case "development":
@@ -70,6 +71,13 @@ client.on(Discord.Events.GuildCreate, guild => {
     createServer(guild.id)
 })
 
+client.on(Discord.Events.GuildMemberAdd, async (member) => {
+    const server = await getServer(member.guild.id)
+
+    const defaultRoles = await getRoleResolvable(member.guild, server.roles.default)
+
+    await member.roles.add(defaultRoles)
+})
 
 client.on(Discord.Events.MessageCreate, async message => {
     const client = message.client as TheStarsAbove
