@@ -8,6 +8,7 @@ import {TheStarsAbove} from "./client"
 import {loadMessageCommands, loadSlashCommands} from "./commands/load_commands";
 import deployCommands from "./deploy_commands";
 import {getRoleResolvable} from "./common";
+import {runSelfUpdating} from "./self_updating/run_self_updating";
 
 switch (process.env.NODE_ENV) {
     case "development":
@@ -59,13 +60,8 @@ client.on("ready", async () => {
     }
 
     // Self Updating
-    const nameColorsMessage = require("./self_updating/name_colors_message")
-    await nameColorsMessage.name_colors_message(client, "1063518630261825597", "1063528866506887218")
-
-    // const updateRules = require("./self_updating/updateRules")
-    // await updateRules(client, "747430712617074718")
+    runSelfUpdating(client)
 });
-
 
 client.on(Discord.Events.GuildCreate, guild => {
     createServer(guild.id)
