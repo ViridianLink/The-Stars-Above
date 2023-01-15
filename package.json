@@ -12,7 +12,8 @@
   "dependencies": {
     "discord.js": "latest",
     "dotenv": "latest",
-    "mongoose": "latest"
+    "mongoose": "latest",
+    "node-cron": "latest"
   },
   "devDependencies": {
     "ts-node": "latest"
