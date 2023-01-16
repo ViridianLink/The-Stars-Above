@@ -23,6 +23,7 @@ module.exports = {
         const upperBound = 25
 
         user.leveling.xp += Math.floor(Math.random() * (upperBound + 1 - lowerBound)) + lowerBound
+        user.leveling.level = Math.floor(0.15 * Math.sqrt(user.leveling.xp))
         user.leveling.lastMessage = message.createdTimestamp
         await user.save()
     }
