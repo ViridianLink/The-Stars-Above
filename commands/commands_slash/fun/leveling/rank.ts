@@ -18,7 +18,7 @@ module.exports = {
         const user = await interaction.client.users.fetch(userId)
         const userConfig = await getUserConfig(userId)
 
-        const level = Math.floor(0.15 * Math.sqrt(userConfig.leveling.xp))
+        const level = userConfig.leveling.level == 0 ? Math.floor(0.15 * Math.sqrt(userConfig.leveling.xp)) : userConfig.leveling.level
         const xpToNextLevel = Math.round(((level + 1) / 0.15) ** 2)
 
         const canvas = Canvas.createCanvas(1400, 319)
@@ -59,7 +59,6 @@ module.exports = {
         ctx.drawImage(serverIcon, 1000, (canvas.height - serverIcon.height) / 2, serverIcon.width, serverIcon.height)
 
         const attachment = new Discord.AttachmentBuilder(canvas.toBuffer())
-
         await interaction.reply({files: [attachment]})
     }
 }
