@@ -73,6 +73,10 @@ client.on(Discord.Events.GuildMemberAdd, async (member) => {
     const defaultRoles = await getRoleResolvable(member.guild, server.roles.default)
 
     await member.roles.add(defaultRoles)
+
+    const welcomeChannel = await member.guild.channels.fetch("927695775650177075")
+    if (welcomeChannel?.type == Discord.ChannelType.GuildText)
+        welcomeChannel.send(`Welcome to The Stars Above ${member}, glad you made it here safely! Make sure to grab some <#926505179514273863> and <#1063518630261825597> and then come join us in <#926461127100100608>`)
 })
 
 client.on(Discord.Events.MessageCreate, async message => {
