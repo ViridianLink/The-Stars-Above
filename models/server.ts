@@ -24,32 +24,35 @@ export interface IServer {
         logsChannel: string,
         ticketChannel: string,
         countingChannel: string
-    },
+    };
     counting: {
         number: number,
         lastUser: string
-    },
+    };
     disabledCommands: string[],
     hidden: {
         rules: Map<string, string>
-    },
-    id: string,
-    moderation: IModeration[]
+    };
+    id: string;
+    leveling: {
+        ignoredChannels: string[]
+    };
+    moderation: IModeration[];
     reactionRoles: [{
         channelId: string,
         messageId: string,
         roleId: string,
         emoji: string
-    }]
+    }];
     roles: {
         default: string[],
         moderationRoles: string[],
         supportRoles: string[]
-    },
-    serverRules: string[]
+    };
+    serverRules: string[];
     ticketId: number;
 
-    save(): Promise<IServer>,
+    save(): Promise<IServer>;
 }
 
 
@@ -69,6 +72,9 @@ const ServerSchema = new mongoose.Schema<IServer>({
         rules: {type: Map, of: String}
     },
     id: String,
+    leveling: {
+        ignoredChannels: [String]
+    },
     moderation: [{
         caseNumber: Number,
         guildId: String,
