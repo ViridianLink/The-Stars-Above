@@ -4,6 +4,7 @@ export interface IUserConfig {
     id: string;
     leveling: {
         xp: number,
+        level: number,
         lastMessage: number
     };
 
@@ -18,6 +19,7 @@ const UserConfigSchema = new mongoose.Schema<IUserConfig>({
     id: String,
     leveling: {
         xp: {type: Number, default: 0},
+        level: {type: Number, default: 0},
         lastMessage: Number
     }
 })
