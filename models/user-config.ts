@@ -1,34 +1,24 @@
 import mongoose from "mongoose";
 
 export interface IUserConfig {
-    id: string
-    stars: {
-        numberOfStars: number,
-        givenStars: number,
-        receivedStars: number,
-    },
-    tradingCards: {
-        unopenedCardPacks: number,
-        openedCardPacks: number
-    }
+    id: string;
+    leveling: {
+        xp: number,
+        lastMessage: number
+    };
 
     save(): Promise<IUserConfig>;
 }
 
-export async function getUserConfig(id: string) {
+export async function getUserConfig(id: string): Promise<IUserConfig> {
     return await UserConfig.findOne({id: id}).exec() || new UserConfig({id: id})
 }
 
 const UserConfigSchema = new mongoose.Schema<IUserConfig>({
     id: String,
-    stars: {
-        numberOfStars: {type: Number, default: 0},
-        givenStars: {type: Number, default: 0},
-        receivedStars: {type: Number, default: 0},
-    },
-    tradingCards: {
-        unopenedCardPacks: {type: Number, default: 0},
-        openedCardPacks: {type: Number, default: 0}
+    leveling: {
+        xp: {type: Number, default: 0},
+        lastMessage: Number
     }
 })
 
