@@ -21,10 +21,15 @@ module.exports = {
 
         const lowerBound = 15
         const upperBound = 25
+        const multiplier = message.member.roles.cache.has("1032427564796493905") ? 0.15 : 0.1
 
         user.leveling.xp += Math.floor(Math.random() * (upperBound + 1 - lowerBound)) + lowerBound
-        user.leveling.level = Math.floor(0.15 * Math.sqrt(user.leveling.xp))
+        user.leveling.level = Math.floor(multiplier * Math.sqrt(user.leveling.xp))
         user.leveling.lastMessage = message.createdTimestamp
+
+        if (user.leveling.level >= 5) {
+            await message.member.roles.add("1032427564796493905")
+        }
         await user.save()
     }
 }
