@@ -3,17 +3,17 @@ import {TheStarsAbove} from "../../client";
 
 const REACTION_ROLES = {
     "Interests": {
-        "Music": "",
-        ":video_game:": "<@&926515717224955905>",
-        "Art": "",
-        "Anime": "",
-        "Movies / TV": "",
-        "Fitness": "",
-        "Reading": "",
-        "Cooking": "",
-        "Sports": "",
-        "Gardening": "",
-        ":pray:": "<@&1034678584289267784>",
+        "🎵": "<@&1066093359027998882>",
+        "🎮": "<@&926515717224955905>",
+        "🎨": "<@&1066093839040921620>",
+        "👹": "<@&1066094191802843257>",
+        "🎥": "<@&1066094299550318633>",
+        "🏋️": "<@&1066094621148586035>",
+        "📚": "<@&1066094685296275548>",
+        "🍳": "<@&1066094768255414312>",
+        "🏀": "<@&1066094926955290705>",
+        "🌻": "<@&1066094996299710585>",
+        "🙏": "<@&1034678584289267784>",
     }
 }
 
@@ -45,5 +45,5 @@ async function reactionRolesMessage(client: TheStarsAbove, channelId: string, me
 }
 
 module.exports = async function (client: TheStarsAbove) {
-    await reactionRolesMessage(client, "926505179514273863", "1064248648826880027")
+    await reactionRolesMessage(client, "926505179514273863", "1065642184633753640")
 }
