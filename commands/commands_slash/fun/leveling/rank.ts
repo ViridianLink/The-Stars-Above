@@ -1,6 +1,7 @@
 import Discord from "discord.js";
 import {getUserConfig} from "../../../../models/user-config";
 import Canvas from "canvas";
+import fs from "fs";
 
 module.exports = {
     data: new Discord.SlashCommandBuilder()
@@ -15,48 +16,63 @@ module.exports = {
             return;
 
         const userId = interaction.options.getUser("user")?.id ?? interaction.member.user.id
-        const user = await interaction.client.users.fetch(userId)
-        const userConfig = await getUserConfig(userId)
+        const [member, userConfig] = await Promise.all([
+            interaction.guild.members.fetch(userId),
+            getUserConfig(userId)
+        ])
 
         const level = userConfig.leveling.level == 0 ? Math.floor(0.15 * Math.sqrt(userConfig.leveling.xp)) : userConfig.leveling.level
-        const xpToNextLevel = Math.round(((level + 1) / 0.15) ** 2)
+        const multiplier = member.roles.cache.has("1032427564796493905") ? 0.15 : 0.1
+        const xpToNextLevel = Math.round(((level + 1) / multiplier) ** 2)
 
         const canvas = Canvas.createCanvas(1400, 319)
         const ctx = canvas.getContext("2d")
+        ctx.textBaseline = "top"
+        ctx.textAlign = "start"
 
-        ctx.fillStyle = "#242424";
-        ctx.fillRect(0, 0, 1400, 319);
+        const background = new Canvas.Image()
+        fs.readFile("./media/rank_banner_background.jpg", (err, data) => {
+            if (err)
+                throw err
 
-        const avatar = await Canvas.loadImage(user.avatarURL({forceStatic: true, size: 256, extension: "png"})!)
-        ctx.drawImage(avatar, 40, 40, 200, 200)
+            background.src = data;
+        })
 
-        ctx.font = "72px sans-serif"
+        background.onload = () => ctx.drawImage(background, 0, 0, 1400, 319);
+
+        const avatar = await Canvas.loadImage(member.user.avatarURL({forceStatic: true, size: 256, extension: "png"})!)
+        ctx.save()
+
+        ctx.beginPath()
+        ctx.arc(107 + 25, 107 + 25, 107, 0, 2 * Math.PI)
+        ctx.clip()
+        ctx.drawImage(avatar, 25, 25, 214, 214)
+        ctx.restore()
+
+        ctx.font = "bold 72px sans-serif"
         ctx.fillStyle = "white"
-        ctx.textAlign = "left"
-        ctx.fillText(user.username, 270, 100)
+        ctx.fillText(member.user.username, 276, 25)
 
-        ctx.fillRect(30, 260, 900, 50)
+        ctx.font = "56px sans-serif"
+        ctx.fillText(`#${member.user.discriminator}`, 276, 100)
+
+        ctx.fillRect(25, 252, 878, 42)
 
         ctx.fillStyle = "purple"
-        ctx.fillRect(30, 260, 900 * (userConfig.leveling.xp / xpToNextLevel), 50)
+        ctx.fillRect(25, 252, 878 * (userConfig.leveling.xp / xpToNextLevel), 42)
 
         ctx.fillStyle = "white"
-        ctx.font = "36px sans-serif"
-        ctx.fillText("Rank: WIP", 260, 250)
+        ctx.font = "42px sans-serif"
+        ctx.textBaseline = "bottom"
+        ctx.fillText("Rank: ", 260, 238)
 
         ctx.textAlign = "right"
-        ctx.fillText(`Level ${level}`, 875, 250)
+        ctx.fillText(`Level ${level}`, 882, 238)
 
-        ctx.fillStyle = "black"
-        ctx.fillText(`${userConfig.leveling.xp} / ${xpToNextLevel} EXP`, 875, 300)
-
-        const serverIcon = await Canvas.loadImage(interaction.guild.iconURL({
-            forceStatic: true,
-            size: 256,
-            extension: "png"
-        })!)
-
-        ctx.drawImage(serverIcon, 1000, (canvas.height - serverIcon.height) / 2, serverIcon.width, serverIcon.height)
+        ctx.font = "16px sans-serif"
+        ctx.fillStyle = "grey"
+        ctx.textBaseline = "middle"
+        ctx.fillText(`${userConfig.leveling.xp} / ${xpToNextLevel} EXP`, 881, 273)
 
         const attachment = new Discord.AttachmentBuilder(canvas.toBuffer())
         await interaction.reply({files: [attachment]})
