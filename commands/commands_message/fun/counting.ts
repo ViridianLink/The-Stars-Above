@@ -5,7 +5,7 @@ import {client} from "../../../index";
 module.exports = {
     command: "counting",
     callback: async function (message: Discord.Message) {
-        if (!message.guild || !message.member || message.member.id == client.user?.id)
+        if (isNaN(Number(message.content)) || !message.guild || !message.member || message.member.id == client.user?.id)
             return;
 
         const server = await getServer(message.guild.id)
