@@ -19,6 +19,8 @@ module.exports = {
             return
         }
 
+        const previousLevel = user.leveling.level
+
         const lowerBound = 15
         const upperBound = 25
         const multiplier = message.member.roles.cache.has("1032427564796493905") ? 0.15 : 0.1
@@ -26,6 +28,10 @@ module.exports = {
         user.leveling.xp += Math.floor(Math.random() * (upperBound + 1 - lowerBound)) + lowerBound
         user.leveling.level = Math.floor(multiplier * Math.sqrt(user.leveling.xp))
         user.leveling.lastMessage = message.createdTimestamp
+
+        if (previousLevel < user.leveling.level) {
+            message.channel.send(`Congrats! ${message.member} just advanced to level ${user.leveling.level}`)
+        }
 
         if (user.leveling.level >= 5) {
             await message.member.roles.add("1032427564796493905")
