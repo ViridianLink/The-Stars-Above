@@ -22,7 +22,7 @@ module.exports = {
         ])
 
         const level = userConfig.leveling.level
-        const xpToNextLevel = Math.round(((level + 1) / 0.1) ** 2)
+        const xpToNextLevel = Math.round(((level + 1) / 0.15) ** 2)
 
         const canvas = Canvas.createCanvas(1400, 319)
         const ctx = canvas.getContext("2d")
