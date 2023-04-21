@@ -21,9 +21,8 @@ module.exports = {
             getUserConfig(userId)
         ])
 
-        const level = userConfig.leveling.level == 0 ? Math.floor(0.15 * Math.sqrt(userConfig.leveling.xp)) : userConfig.leveling.level
-        const multiplier = member.roles.cache.has("1032427564796493905") ? 0.15 : 0.1
-        const xpToNextLevel = Math.round(((level + 1) / multiplier) ** 2)
+        const level = userConfig.leveling.level
+        const xpToNextLevel = Math.round(((level + 1) / 0.1) ** 2)
 
         const canvas = Canvas.createCanvas(1400, 319)
         const ctx = canvas.getContext("2d")

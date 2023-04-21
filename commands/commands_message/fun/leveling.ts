@@ -34,7 +34,7 @@ module.exports = {
         const upperBound = 25
 
         user.leveling.xp += Math.floor(Math.random() * (upperBound + 1 - lowerBound)) + lowerBound
-        user.leveling.level = Math.floor(Math.sqrt(user.leveling.xp))
+        user.leveling.level = Math.floor(0.1 * Math.sqrt(user.leveling.xp))
         user.leveling.lastMessage = message.createdTimestamp
 
         if (previousLevel < user.leveling.level) {
