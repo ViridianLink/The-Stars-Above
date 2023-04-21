@@ -32,9 +32,10 @@ module.exports = {
 
         const lowerBound = 15
         const upperBound = 25
+        const multiplier = 0.15
 
         user.leveling.xp += Math.floor(Math.random() * (upperBound + 1 - lowerBound)) + lowerBound
-        user.leveling.level = Math.floor(0.15 * Math.sqrt(user.leveling.xp))
+        user.leveling.level = Math.floor(multiplier * Math.sqrt(user.leveling.xp))
         user.leveling.lastMessage = message.createdTimestamp
 
         if (previousLevel < user.leveling.level) {
@@ -43,7 +44,8 @@ module.exports = {
 
         for (const [level, roleId] of levelRoles) {
             if (user.leveling.level < level) {
-                break;
+                await message.member.roles.remove(roleId)
+                continue
             }
 
             await message.member.roles.add(roleId)
